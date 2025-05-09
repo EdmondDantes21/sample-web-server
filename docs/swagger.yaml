@@ -1,0 +1,150 @@
+consumes:
+- application/json
+- application/json
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  main.sample:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Delete an existing sample by its name
+paths:
+  /samples:
+    get:
+      description: Get all sample items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.sample'
+            type: array
+      summary: List samples
+      tags:
+      - samples
+    post:
+      consumes:
+      - application/json
+      description: Add a new sample from the request body
+      parameters:
+      - description: sample to add
+        in: body
+        name: sample
+        required: true
+        schema:
+          $ref: '#/definitions/main.sample'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.sample'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create a new sample
+      tags:
+      - samples
+  /samples/{name}:
+    delete:
+      description: Delete an existing sample by its name
+      parameters:
+      - description: sample Name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: sample deleted message
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: sample not found message
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete sample by Name
+      tags:
+      - samples
+    get:
+      description: Get a single sample by its name
+      parameters:
+      - description: sample Name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.sample'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get sample by Name
+      tags:
+      - samples
+    put:
+      consumes:
+      - application/json
+      description: Update an existing sample by its name
+      parameters:
+      - description: sample Name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Updated sample Data
+        in: body
+        name: sample
+        required: true
+        schema:
+          $ref: '#/definitions/main.sample'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.sample'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update sample by Name
+      tags:
+      - samples
+produces:
+- application/json
+- application/json
+- application/json
+- application/json
+- application/json
+swagger: "2.0"
